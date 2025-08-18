@@ -1,0 +1,41 @@
+[gd_scene load_steps=4 format=3 uid="uid://by8k7pfoi10dw"]
+
+[ext_resource type="Script" uid="uid://dfky77qrbkdju" path="res://gd/shell.gd" id="1_nb1cp"]
+[ext_resource type="PackedScene" uid="uid://xyot0aambvq1" path="res://gd/grid.tscn" id="2_onlqs"]
+[ext_resource type="PackedScene" uid="uid://by4r1svn8qpnj" path="res://gd/top_screen.tscn" id="3_ibhr2"]
+
+[node name="Shell" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_nb1cp")
+
+[node name="Black" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.424463, 0.517091, 0.591264, 1)
+
+[node name="Grid" parent="." instance=ExtResource("2_onlqs")]
+layout_mode = 1
+
+[node name="TopScreen" type="Window" parent="."]
+auto_translate_mode = 1
+position = Vector2i(0, 36)
+size = Vector2i(800, 640)
+
+[node name="ColorRect" type="ColorRect" parent="TopScreen"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.436747, 0.374159, 0.499914, 1)
+
+[node name="TopScreen" parent="TopScreen" instance=ExtResource("3_ibhr2")]

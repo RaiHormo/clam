@@ -1,0 +1,72 @@
+[gd_scene load_steps=6 format=3 uid="uid://c64dchpnpluy"]
+
+[ext_resource type="Script" uid="uid://bjoi1xy5u62y5" path="res://gd/grid-slot.gd" id="1_pedtt"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pedtt"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hraeh"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pedtt"]
+bg_color = Color(1, 1, 1, 0.118)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hraeh"]
+draw_center = false
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+
+[node name="Slot" type="Button"]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(128, 128)
+offset_right = 128.0
+offset_bottom = 128.0
+theme_override_styles/hover = SubResource("StyleBoxEmpty_pedtt")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_hraeh")
+action_mode = 0
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("1_pedtt")
+
+[node name="Placeholder" type="CenterContainer" parent="."]
+show_behind_parent = true
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 128.0
+
+[node name="Panel" type="Panel" parent="Placeholder"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_pedtt")
+
+[node name="Icon" type="TextureRect" parent="."]
+layout_mode = 0
+offset_top = 1.0
+offset_right = 128.0
+offset_bottom = 129.0
+scale = Vector2(0.85, 0.85)
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Focus" type="Panel" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 128.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hraeh")
+
+[connection signal="button_up" from="." to="." method="_on_button_up"]
+[connection signal="focus_exited" from="." to="." method="_on_focus_exited"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

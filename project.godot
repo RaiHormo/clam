@@ -11,8 +11,37 @@ config_version=5
 [application]
 
 config/name="Clam"
+run/main_scene="uid://by8k7pfoi10dw"
+config/use_custom_user_dir=true
+config/custom_user_dir_name="clam"
+config/quit_on_go_back=false
 config/features=PackedStringArray("4.4", "GL Compatibility")
-config/icon="res://icon.svg"
+run/low_processor_mode=true
+boot_splash/bg_color=Color(0, 0, 0, 0)
+boot_splash/show_image=false
+boot_splash/fullsize=false
+boot_splash/use_filter=false
+config/icon="res://asset/icon.svg"
+
+[autoload]
+
+State="*res://gd/state.gd"
+
+[debug]
+
+gdscript/warnings/integer_division=0
+
+[display]
+
+window/size/viewport_width=800
+window/size/viewport_height=640
+window/size/transparent=true
+window/subwindows/embed_subwindows=false
+window/per_pixel_transparency/allowed=true
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/SmoothScroll/plugin.cfg")
 
 [rendering]
 
