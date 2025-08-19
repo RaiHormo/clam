@@ -7,6 +7,7 @@ class_name GridSlot extends Button
 var under_mouse:= false
 @export var extension:= Vector2i(1, 1)
 @export var extending:= -1
+@export var entry: DesktopEntry
 
 func _ready() -> void:
 	focus_entered.connect(focus)
@@ -16,15 +17,20 @@ func _ready() -> void:
 	update()
 
 func update():
-	$Icon.texture = icon
+	$Icon/Icon.texture = icon
 	if filename.is_empty() and extending<0: 
 		$Placeholder.show()
-	else: 
+		$Icon.hide()
+		$Border.hide()
+	else:
+		$Icon.show() 
+		if extension == Vector2i.ONE and extending<0: $Border.show()
+		else: $Border.hide()
 		$Placeholder.hide()
 		$Icon.size = size * Vector2(extension)
 		$Focus.size = size * Vector2(extension)
-		$Icon.pivot_offset = $Icon.size/2
-		$Icon.scale = Vector2(0.85, 0.85)
+		$Icon.pivot_offset = Vector2.ZERO
+		$Icon.scale = Vector2(0.9, 0.9)
 		if extending >= 0:
 			var extender: GridSlot = get_parent().get_child(extending)
 			if extender.filename.is_empty() or extender.extension == Vector2i.ONE:
@@ -50,18 +56,20 @@ func focus():
 		extender.focus()
 
 func press():
-	print("a")
 	scale = Vector2(0.9, 0.9)
-	await get_tree().create_timer(0.5).timeout
-	if button_pressed:
-		scale = Vector2(0.9, 0.9)
-		modulate = Color(1,1,1,0.6)
-		get_viewport().gui_release_focus()
-		State.drag_state = true
-		while Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-			await get_tree().process_frame
-		State.drag_state = false
-		modulate = Color.WHITE
+	if extending >= 0:
+		get_parent().get_child(extending).press()
+	if not filename.is_empty() and not Input.is_action_pressed("ui_accept"):
+		await get_tree().create_timer(0.5).timeout
+		if button_pressed:
+			scale = Vector2(0.9, 0.9)
+			modulate = Color(1,1,1,0.6)
+			get_viewport().gui_release_focus()
+			State.drag_state = true
+			while Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+				await get_tree().process_frame
+			State.drag_state = false
+			modulate = Color.WHITE
 
 func _on_mouse_entered() -> void:
 	under_mouse = true
@@ -75,7 +83,7 @@ func _on_mouse_entered() -> void:
 			State.selection.copy(temp)
 			State.selection.update()
 			grab_focus()
-			update()
+			State.menu_changed.emit()
 		modulate = Color.WHITE
 
 
@@ -86,12 +94,14 @@ func erase():
 	filename = ""
 	title = ""
 	icon = null
+	extending = -1
+	extension = Vector2.ONE
 
 func copy(item: GridSlot):
 	filename = item.filename
 	icon = item.icon
 	title = item.title
-
+	extension = item.extension
 
 func _on_focus_exited() -> void:
 	$Focus.hide()
@@ -101,9 +111,11 @@ func _on_focus_exited() -> void:
 func make_extension(neighbour: Control):
 	if neighbour is GridSlot:
 		neighbour.extending = get_index()
-		neighbour.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		neighbour.mouse_filter = Control.MOUSE_FILTER_PASS
 		neighbour.update()
 
 
 func _on_button_up() -> void:
 	scale = Vector2(1, 1)
+	if extending >= 0:
+		get_parent().get_child(extending)._on_button_up()

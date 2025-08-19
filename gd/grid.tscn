@@ -1,11 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://xyot0aambvq1"]
+[gd_scene load_steps=14 format=3 uid="uid://xyot0aambvq1"]
 
 [ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/SmoothScrollContainer.gd" id="1_ei22d"]
+[ext_resource type="Script" uid="uid://caq8rcu0lvj6u" path="res://gd/grid-dock.gd" id="1_l4qic"]
 [ext_resource type="PackedScene" uid="uid://c64dchpnpluy" path="res://gd/grid-slot.tscn" id="1_m5sku"]
 [ext_resource type="Script" uid="uid://b7h0k2h2qwlqv" path="res://addons/SmoothScroll/scroll_damper/expo_scroll_damper.gd" id="2_bll8t"]
 [ext_resource type="Script" uid="uid://bvmcxpsd1vprg" path="res://gd/grid-maintainer.gd" id="3_bll8t"]
-[ext_resource type="Texture2D" uid="uid://b12jilmo8652j" path="res://asset/icon.svg" id="5_l4qic"]
-[ext_resource type="Texture2D" uid="uid://cj08e1qewq817" path="res://asset/Meowscarada.png" id="6_xxuka"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bll8t"]
 draw_center = false
@@ -55,36 +54,39 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="Dock" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 102.0
 grow_horizontal = 2
+theme_override_constants/separation = 24
 alignment = 1
+script = ExtResource("1_l4qic")
 
-[node name="Slot" parent="HBoxContainer" instance=ExtResource("1_m5sku")]
+[node name="Slot" parent="Dock" instance=ExtResource("1_m5sku")]
 layout_mode = 2
+size_flags_horizontal = 5
 mouse_filter = 1
 
-[node name="Slot2" parent="HBoxContainer" instance=ExtResource("1_m5sku")]
+[node name="Slot2" parent="Dock" instance=ExtResource("1_m5sku")]
 layout_mode = 2
+size_flags_horizontal = 5
 mouse_filter = 1
 
-[node name="Slot3" parent="HBoxContainer" instance=ExtResource("1_m5sku")]
+[node name="Slot3" parent="Dock" instance=ExtResource("1_m5sku")]
 layout_mode = 2
+size_flags_horizontal = 5
 mouse_filter = 1
 
-[node name="Slot4" parent="HBoxContainer" instance=ExtResource("1_m5sku")]
+[node name="Slot4" parent="Dock" instance=ExtResource("1_m5sku")]
 layout_mode = 2
+size_flags_horizontal = 5
 mouse_filter = 1
 
-[node name="Slot5" parent="HBoxContainer" instance=ExtResource("1_m5sku")]
+[node name="Slot5" parent="Dock" instance=ExtResource("1_m5sku")]
 layout_mode = 2
-mouse_filter = 1
-
-[node name="Slot6" parent="HBoxContainer" instance=ExtResource("1_m5sku")]
-layout_mode = 2
+size_flags_horizontal = 5
 mouse_filter = 1
 
 [node name="SmoothScrollContainer" type="ScrollContainer" parent="."]
@@ -131,153 +133,12 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_hmxq0")
 
 [node name="GridContainer" type="GridContainer" parent="SmoothScrollContainer/HBoxContainer/PanelContainer"]
 layout_mode = 2
-columns = 12
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 20
 script = ExtResource("3_bll8t")
+rows = 4
 
 [node name="Slot" parent="SmoothScrollContainer/HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("1_m5sku")]
-layout_mode = 2
-mouse_filter = 1
-
-[node name="Slot2" parent="SmoothScrollContainer/HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("1_m5sku")]
-layout_mode = 2
-mouse_filter = 1
-icon = ExtResource("5_l4qic")
-title = "Godot"
-filename = "godot"
-
-[node name="Slot3" parent="SmoothScrollContainer/HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("1_m5sku")]
-layout_mode = 2
-mouse_filter = 1
-
-[node name="Slot4" parent="SmoothScrollContainer/HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("1_m5sku")]
-layout_mode = 2
-mouse_filter = 1
-
-[node name="Slot5" parent="SmoothScrollContainer/HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("1_m5sku")]
-layout_mode = 2
-mouse_filter = 1
-
-[node name="Slot6" parent="SmoothScrollContainer/HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("1_m5sku")]
-layout_mode = 2
-mouse_filter = 1
-
-[node name="Slot7" parent="SmoothScrollContainer/HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("1_m5sku")]
-layout_mode = 2
-mouse_filter = 1
-
-[node name="Slot8" parent="SmoothScrollContainer/HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("1_m5sku")]
-layout_mode = 2
-mouse_filter = 1
-
-[node name="Slot9" parent="SmoothScrollContainer/HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("1_m5sku")]
-layout_mode = 2
-mouse_filter = 1
-
-[node name="Slot10" parent="SmoothScrollContainer/HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("1_m5sku")]
-layout_mode = 2
-mouse_filter = 1
-
-[node name="Slot11" parent="SmoothScrollContainer/HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("1_m5sku")]
-layout_mode = 2
-mouse_filter = 1
-
-[node name="Slot12" parent="SmoothScrollContainer/HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("1_m5sku")]
-layout_mode = 2
-mouse_filter = 1
-
-[node name="Slot13" parent="SmoothScrollContainer/HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("1_m5sku")]
-layout_mode = 2
-mouse_filter = 1
-
-[node name="Slot14" parent="SmoothScrollContainer/HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("1_m5sku")]
-layout_mode = 2
-mouse_filter = 1
-
-[node name="Slot15" parent="SmoothScrollContainer/HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("1_m5sku")]
-layout_mode = 2
-mouse_filter = 1
-icon = ExtResource("6_xxuka")
-title = "Meow"
-filename = "meow"
-extension = Vector2i(2, 2)
-
-[node name="Slot16" parent="SmoothScrollContainer/HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("1_m5sku")]
-layout_mode = 2
-mouse_filter = 1
-
-[node name="Slot17" parent="SmoothScrollContainer/HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("1_m5sku")]
-layout_mode = 2
-mouse_filter = 1
-
-[node name="Slot18" parent="SmoothScrollContainer/HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("1_m5sku")]
-layout_mode = 2
-mouse_filter = 1
-
-[node name="Slot19" parent="SmoothScrollContainer/HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("1_m5sku")]
-layout_mode = 2
-mouse_filter = 1
-
-[node name="Slot20" parent="SmoothScrollContainer/HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("1_m5sku")]
-layout_mode = 2
-mouse_filter = 1
-
-[node name="Slot21" parent="SmoothScrollContainer/HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("1_m5sku")]
-layout_mode = 2
-mouse_filter = 1
-
-[node name="Slot22" parent="SmoothScrollContainer/HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("1_m5sku")]
-layout_mode = 2
-mouse_filter = 1
-
-[node name="Slot23" parent="SmoothScrollContainer/HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("1_m5sku")]
-layout_mode = 2
-mouse_filter = 1
-
-[node name="Slot24" parent="SmoothScrollContainer/HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("1_m5sku")]
-layout_mode = 2
-mouse_filter = 1
-
-[node name="Slot25" parent="SmoothScrollContainer/HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("1_m5sku")]
-layout_mode = 2
-mouse_filter = 1
-
-[node name="Slot26" parent="SmoothScrollContainer/HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("1_m5sku")]
-layout_mode = 2
-mouse_filter = 1
-
-[node name="Slot27" parent="SmoothScrollContainer/HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("1_m5sku")]
-layout_mode = 2
-mouse_filter = 1
-
-[node name="Slot28" parent="SmoothScrollContainer/HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("1_m5sku")]
-layout_mode = 2
-mouse_filter = 1
-
-[node name="Slot29" parent="SmoothScrollContainer/HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("1_m5sku")]
-layout_mode = 2
-mouse_filter = 1
-
-[node name="Slot30" parent="SmoothScrollContainer/HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("1_m5sku")]
-layout_mode = 2
-mouse_filter = 1
-
-[node name="Slot31" parent="SmoothScrollContainer/HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("1_m5sku")]
-layout_mode = 2
-mouse_filter = 1
-
-[node name="Slot32" parent="SmoothScrollContainer/HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("1_m5sku")]
-layout_mode = 2
-mouse_filter = 1
-
-[node name="Slot33" parent="SmoothScrollContainer/HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("1_m5sku")]
-layout_mode = 2
-mouse_filter = 1
-
-[node name="Slot34" parent="SmoothScrollContainer/HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("1_m5sku")]
-layout_mode = 2
-mouse_filter = 1
-
-[node name="Slot35" parent="SmoothScrollContainer/HBoxContainer/PanelContainer/GridContainer" instance=ExtResource("1_m5sku")]
 layout_mode = 2
 mouse_filter = 1
 

@@ -11,29 +11,29 @@ func tick():
 
 func get_month(m: int) -> String:
 	match m:
-		0: return "January"
-		1: return "February"
-		2: return "March"
-		3: return "April"
-		4: return "May"
-		5: return "June"
-		6: return "July"
-		7: return "August"
-		8: return "September"
-		9: return "October"
-		10: return "November"
-		11: return "December"
+		1: return "January"
+		2: return "February"
+		3: return "March"
+		4: return "April"
+		5: return "May"
+		6: return "June"
+		7: return "July"
+		8: return "August"
+		9: return "September"
+		10: return "October"
+		11: return "November"
+		12: return "December"
 		_: return "???"
 
 func get_weekday(m: int) -> String:
 	match m:
-		0: return "MON"
-		1: return "TUE"
-		2: return "WED"
-		3: return "THU"
-		4: return "FRI"
-		5: return "SAT"
-		6: return "SUN"
+		1: return "MON"
+		2: return "TUE"
+		3: return "WED"
+		4: return "THU"
+		5: return "FRI"
+		6: return "SAT"
+		7: return "SUN"
 		_: return "???"
 
 func appear():

@@ -1,10 +1,20 @@
-[gd_scene load_steps=6 format=3 uid="uid://c64dchpnpluy"]
+[gd_scene load_steps=8 format=3 uid="uid://c64dchpnpluy"]
 
 [ext_resource type="Script" uid="uid://bjoi1xy5u62y5" path="res://gd/grid-slot.gd" id="1_pedtt"]
+[ext_resource type="Texture2D" uid="uid://dkbf2kofkdygt" path="res://asset/Placeholder.png" id="2_pedtt"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pedtt"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hraeh"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5msxx"]
+bg_color = Color(1, 1, 1, 0)
+draw_center = false
+border_width_left = 18
+border_width_top = 18
+border_width_right = 18
+border_width_bottom = 18
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pedtt"]
 bg_color = Color(1, 1, 1, 0.118)
@@ -13,24 +23,55 @@ corner_radius_top_right = 24
 corner_radius_bottom_right = 24
 corner_radius_bottom_left = 24
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5ad0r"]
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_femuk"]
+bg_color = Color(0.819654, 0.819655, 0.819654, 1)
+border_width_left = 6
+border_width_top = 4
+border_width_right = 6
+border_width_bottom = 8
+border_color = Color(0.65834, 0.65834, 0.65834, 1)
+border_blend = true
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+shadow_color = Color(0, 0, 0, 0.411765)
+shadow_size = 12
+shadow_offset = Vector2(0, 5.205)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hraeh"]
+bg_color = Color(0.87, 0.87, 0.87, 0.180392)
 draw_center = false
 border_width_left = 8
 border_width_top = 8
 border_width_right = 8
 border_width_bottom = 8
+border_color = Color(0.56448, 0.5096, 0.98, 1)
 corner_radius_top_left = 24
 corner_radius_top_right = 24
 corner_radius_bottom_right = 24
 corner_radius_bottom_left = 24
+expand_margin_left = 4.0
+expand_margin_top = 4.0
+expand_margin_right = 4.0
+expand_margin_bottom = 4.0
 
 [node name="Slot" type="Button"]
 self_modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(128, 128)
 offset_right = 128.0
 offset_bottom = 128.0
-theme_override_styles/hover = SubResource("StyleBoxEmpty_pedtt")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_hraeh")
+theme_override_styles/focus = SubResource("StyleBoxFlat_5msxx")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_5msxx")
+theme_override_styles/hover = SubResource("StyleBoxFlat_5msxx")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_5msxx")
+theme_override_styles/normal = SubResource("StyleBoxFlat_5msxx")
 action_mode = 0
 icon_alignment = 1
 expand_icon = true
@@ -41,6 +82,7 @@ show_behind_parent = true
 layout_mode = 0
 offset_right = 128.0
 offset_bottom = 128.0
+mouse_filter = 2
 
 [node name="Panel" type="Panel" parent="Placeholder"]
 custom_minimum_size = Vector2(64, 64)
@@ -48,15 +90,31 @@ layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_pedtt")
 
-[node name="Icon" type="TextureRect" parent="."]
+[node name="Icon" type="PanelContainer" parent="."]
+clip_children = 1
 layout_mode = 0
-offset_top = 1.0
-offset_right = 128.0
-offset_bottom = 129.0
-scale = Vector2(0.85, 0.85)
+offset_left = 7.0
+offset_top = 6.0
+offset_right = 135.0
+offset_bottom = 134.0
+scale = Vector2(0.9, 0.9)
 mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_5ad0r")
+
+[node name="Icon" type="TextureRect" parent="Icon"]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("2_pedtt")
 expand_mode = 1
 stretch_mode = 5
+
+[node name="Border" type="Panel" parent="."]
+show_behind_parent = true
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 128.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_femuk")
 
 [node name="Focus" type="Panel" parent="."]
 visible = false

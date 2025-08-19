@@ -15,3 +15,9 @@ func update_topscreen():
 		$Icon.show()
 		$Title/Label.text = State.selection.title
 		$Icon.texture = State.selection.icon
+
+func _input(event: InputEvent) -> void:
+	if event.is_action("ui_right") or event.is_action("ui_left") or event.is_action("ui_up") or event.is_action("ui_down"):
+		State.get_window().grab_focus()
+		if is_instance_valid(State.selection): State.selection.grab_focus()
+		else: get_child(0).grab_focus()
