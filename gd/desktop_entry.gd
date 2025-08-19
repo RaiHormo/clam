@@ -41,3 +41,6 @@ func icon() -> Texture:
 		push_warning(iconpath+" isn't a valid path")
 		return preload("res://asset/Placeholder.png")
 	
+func get_type():
+	if "steam" in get_line("Exec"): return "steam"
+	return "native_app"

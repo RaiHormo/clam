@@ -6,4 +6,4 @@ func _ready() -> void:
 func save_slots():
 	for i in get_children():
 		if not i.filename.is_empty():
-			State.positions.set(i.filename, -i.get_index())
+			State.positions.set(i.filename, -i.get_index()-1)

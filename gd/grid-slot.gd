@@ -8,6 +8,7 @@ var under_mouse:= false
 @export var extension:= Vector2i(1, 1)
 @export var extending:= -1
 @export var entry: DesktopEntry
+var executable:= false
 
 func _ready() -> void:
 	focus_entered.connect(focus)
@@ -26,6 +27,9 @@ func update():
 		$Icon.show() 
 		if extension == Vector2i.ONE and extending<0: $Border.show()
 		else: $Border.hide()
+		if entry != null:
+			var slots = preload("res://theme/slot_theme.tres")
+			$Border.add_theme_stylebox_override("panel", slots.get(entry.get_type()))
 		$Placeholder.hide()
 		$Icon.size = size * Vector2(extension)
 		$Focus.size = size * Vector2(extension)
@@ -54,14 +58,20 @@ func focus():
 	else:
 		var extender: GridSlot = get_parent().get_child(extending)
 		extender.focus()
+	await get_tree().create_timer(0.1).timeout
+	executable = true
 
 func press():
 	scale = Vector2(0.9, 0.9)
 	if extending >= 0:
 		get_parent().get_child(extending).press()
-	if not filename.is_empty() and not Input.is_action_pressed("ui_accept"):
-		await get_tree().create_timer(0.5).timeout
-		if button_pressed:
+	var timer = get_tree().create_timer(0.5)
+	while button_pressed and timer.time_left > 0:
+		await get_tree().process_frame
+	if not button_pressed and executable and timer.time_left > 0.2:
+		execute()
+	elif not filename.is_empty() and not Input.is_action_pressed("ui_accept"):
+		if button_pressed and timer.time_left == 0:
 			scale = Vector2(0.9, 0.9)
 			modulate = Color(1,1,1,0.6)
 			get_viewport().gui_release_focus()
@@ -70,6 +80,29 @@ func press():
 				await get_tree().process_frame
 			State.drag_state = false
 			modulate = Color.WHITE
+
+func execute():
+	if entry != null:
+		var exec: Array = Array(entry.get_line("Exec").split(" "))
+		#if FileAccess.file_exists("/bin/"+exec[0]):
+			#exec[0] = "/bin/"+exec[0]
+		#elif FileAccess.file_exists("/run/host/bin/"+exec[0]):
+			#exec[0] = "/run/host/bin/"+exec[0]
+		#elif FileAccess.file_exists("/home"+State.user+"/.bin/"+exec[0]):
+			#exec[0] = "/home"+State.user+"/.bin/"+exec[0]
+		if OS.get_environment("container"):
+			exec.push_front("--host")
+			exec.push_front("flatpak-spawn")
+		exec.erase("%U")
+		exec.erase("%u")
+		exec.erase("%F")
+		exec.erase("@@")
+		exec.erase("@@u")
+		var args:= Array(exec.duplicate())
+		args.remove_at(0)
+		print("executing ", exec[0])
+		print(args)
+		OS.execute_with_pipe(exec[0], args)
 
 func _on_mouse_entered() -> void:
 	under_mouse = true
@@ -96,15 +129,18 @@ func erase():
 	icon = null
 	extending = -1
 	extension = Vector2.ONE
+	entry = null
 
 func copy(item: GridSlot):
 	filename = item.filename
 	icon = item.icon
 	title = item.title
 	extension = item.extension
+	entry = item.entry
 
 func _on_focus_exited() -> void:
 	$Focus.hide()
+	executable = false
 	if extending >= 0: 
 		get_parent().get_child(extending)._on_focus_exited()
 

@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="SlotTheme" load_steps=4 format=3 uid="uid://dy3wq08c0vgi0"]
+
+[ext_resource type="Script" uid="uid://dv8by37in1rsw" path="res://gd/slot_theme.gd" id="1_myrnm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_femuk"]
+bg_color = Color(0.819654, 0.819655, 0.819654, 1)
+border_width_left = 6
+border_width_top = 4
+border_width_right = 6
+border_width_bottom = 8
+border_color = Color(0.65834, 0.65834, 0.65834, 1)
+border_blend = true
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+shadow_color = Color(0, 0, 0, 0.223529)
+shadow_size = 12
+shadow_offset = Vector2(0, 5.205)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_myrnm"]
+bg_color = Color(0.105882, 0.156863, 0.219608, 1)
+border_width_top = 50
+border_color = Color(0.144, 0.2142, 0.3, 1)
+border_blend = true
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+shadow_color = Color(0, 0.0935, 0.17, 0.32549)
+shadow_size = 12
+shadow_offset = Vector2(0, 5.205)
+
+[resource]
+script = ExtResource("1_myrnm")
+native_app = SubResource("StyleBoxFlat_femuk")
+steam = SubResource("StyleBoxFlat_myrnm")
+metadata/_custom_type_script = "uid://dv8by37in1rsw"

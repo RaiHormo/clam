@@ -1,12 +1,13 @@
 extends Control
 
 @onready var grid: GridContainer = $Grid/SmoothScrollContainer/HBoxContainer/PanelContainer/GridContainer
+var collumns = 40
 
 func _ready() -> void:
 	var whoami: Array[String]
 	OS.execute("whoami", [], whoami)
 	State.user = whoami[0].trim_suffix("\n")
-	for i in 200:
+	while grid.get_child_count() < grid.rows*collumns:
 		var dub = grid.get_child(0).duplicate()
 		dub.erase()
 		grid.add_child(dub)
@@ -16,29 +17,31 @@ func fetch_apps():
 	var j = 0
 	parse_app_folder("/usr/share/applications", j)
 	parse_app_folder("/run/host/usr/share/applications/", j)
+	parse_app_folder("/home/"+State.user+"/.local/share/flatpak/exports/share/applications", j)
 	var dir = "/home/"+State.user+"/.local/share/applications/"
 	parse_app_folder(dir, j)
 
 func parse_app_folder(dir: String, j = 0):
 	var app_folder = DirAccess.open(dir)
+	if app_folder == null: return
 	#print(app_folder.get_files())
 	for i in app_folder.get_files():
-		if i in State.applist: continue
+		#if i in State.applist: continue
 		var slot = grid.get_child(j)
 		var prev_j = j
 		if State.positions.has(i):
 			var pos = State.positions.get(i)  
 			if pos < 0:
-				slot = $Grid/Dock.get_child(abs(pos))
+				slot = $Grid/Dock.get_child(abs(pos)-1)
 			else:
-				j = State.positions.get(i) 
+				slot = grid.get_child(State.positions.get(i))
 		while not (is_instance_valid(slot) and slot.filename.is_empty() and slot.extending < 0): 
 			j += grid.columns
 			if j > grid.get_child_count()-1:
-				j =  max(0, j - grid.get_child_count()-2)
+				j =  max(0, j - grid.get_child_count()+1)
 			slot = grid.get_child(j)
 		var entry = DesktopEntry.open(dir+i)
-		if entry != null and entry.get_line("NoDisplay") != "true":
+		if entry != null and entry.get_line("NoDisplay") != "true" and not "Proton" in entry.title:
 			State.applist.append(i)
 			slot.entry = entry
 			slot.filename = i

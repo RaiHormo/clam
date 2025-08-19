@@ -17,10 +17,10 @@ config/custom_user_dir_name="clam"
 config/quit_on_go_back=false
 config/features=PackedStringArray("4.4", "GL Compatibility")
 run/low_processor_mode=true
-boot_splash/bg_color=Color(0, 0, 0, 0)
-boot_splash/show_image=false
+boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/fullsize=false
 boot_splash/use_filter=false
+boot_splash/image="uid://5nu8fsvu31a8"
 config/icon="res://asset/icon.svg"
 
 [autoload]
@@ -51,3 +51,4 @@ enabled=PackedStringArray("res://addons/SmoothScroll/plugin.cfg")
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+environment/defaults/default_clear_color=Color(0.3, 0.3, 0.3, 0)

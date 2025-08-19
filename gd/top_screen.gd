@@ -1,4 +1,4 @@
-extends Control
+extends CanvasLayer
 
 func _ready() -> void:
 	State.menu_changed.connect(update_topscreen)
