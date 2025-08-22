@@ -15,18 +15,18 @@ func _ready() -> void:
 	
 func fetch_apps():
 	var j = 0
-	parse_app_folder("/usr/share/applications", j)
-	parse_app_folder("/run/host/usr/share/applications/", j)
-	parse_app_folder("/home/"+State.user+"/.local/share/flatpak/exports/share/applications", j)
-	var dir = "/home/"+State.user+"/.local/share/applications/"
-	parse_app_folder(dir, j)
+	for i in State.content_folders:
+		parse_app_folder(i, j)
+	State.save_iconcache()
+	State.applist.sort()
 
 func parse_app_folder(dir: String, j = 0):
+	dir = dir.replace("%USER%", State.user)
 	var app_folder = DirAccess.open(dir)
 	if app_folder == null: return
 	#print(app_folder.get_files())
 	for i in app_folder.get_files():
-		#if i in State.applist: continue
+		if i in State.applist: continue
 		var slot = grid.get_child(j)
 		var prev_j = j
 		if State.positions.has(i):
@@ -40,13 +40,13 @@ func parse_app_folder(dir: String, j = 0):
 			if j > grid.get_child_count()-1:
 				j =  max(0, j - grid.get_child_count()+1)
 			slot = grid.get_child(j)
-		var entry = DesktopEntry.open(dir+i)
+		var entry = await DesktopEntry.open(dir+i)
 		if entry != null and entry.get_line("NoDisplay") != "true" and not "Proton" in entry.title:
 			State.applist.append(i)
 			slot.entry = entry
 			slot.filename = i
 			slot.title = entry.title
 			slot.icon = entry.icon()
+			slot.set_dynamic_icon()
 		else:
 			j = prev_j
-	State.save_iconcache()

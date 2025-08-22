@@ -29,7 +29,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.424463, 0.517091, 0.591264, 1)
+color = Color(0.457467, 0.439227, 0.685992, 1)
 
 [node name="Grid" parent="." instance=ExtResource("2_onlqs")]
 layout_mode = 1
@@ -42,6 +42,7 @@ size = Vector2i(800, 640)
 transparent = true
 
 [node name="3D" type="Node3D" parent="TopScreen"]
+visible = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="TopScreen/3D"]
 transform = Transform3D(1, 0, 0, 0, 0.918177, -0.396171, 0, 0.396171, 0.918177, 0, 0, 0)

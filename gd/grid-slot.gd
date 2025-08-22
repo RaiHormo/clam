@@ -7,8 +7,9 @@ class_name GridSlot extends Button
 var under_mouse:= false
 @export var extension:= Vector2i(1, 1)
 @export var extending:= -1
-@export var entry: DesktopEntry
+@export var entry: Entry
 var executable:= false
+var dynamic_icon: Node = null
 
 func _ready() -> void:
 	focus_entered.connect(focus)
@@ -27,9 +28,8 @@ func update():
 		$Icon.show() 
 		if extension == Vector2i.ONE and extending<0: $Border.show()
 		else: $Border.hide()
-		if entry != null:
-			var slots = preload("res://theme/slot_theme.tres")
-			$Border.add_theme_stylebox_override("panel", slots.get(entry.get_type()))
+		if entry != null and State.theme != null:
+			$Border.add_theme_stylebox_override("panel", State.theme.slots.get(entry.get_type()))
 		$Placeholder.hide()
 		$Icon.size = size * Vector2(extension)
 		$Focus.size = size * Vector2(extension)
@@ -47,6 +47,7 @@ func update():
 			var neighbor = find_valid_focus_neighbor(SIDE_BOTTOM) 
 			if is_instance_valid(neighbor):
 				make_extension(neighbor.find_valid_focus_neighbor(SIDE_RIGHT))
+	set_dynamic_icon()
 
 func focus():
 	update()
@@ -78,31 +79,13 @@ func press():
 			State.drag_state = true
 			while Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 				await get_tree().process_frame
+			update()
 			State.drag_state = false
 			modulate = Color.WHITE
 
 func execute():
 	if entry != null:
-		var exec: Array = Array(entry.get_line("Exec").split(" "))
-		#if FileAccess.file_exists("/bin/"+exec[0]):
-			#exec[0] = "/bin/"+exec[0]
-		#elif FileAccess.file_exists("/run/host/bin/"+exec[0]):
-			#exec[0] = "/run/host/bin/"+exec[0]
-		#elif FileAccess.file_exists("/home"+State.user+"/.bin/"+exec[0]):
-			#exec[0] = "/home"+State.user+"/.bin/"+exec[0]
-		if OS.get_environment("container"):
-			exec.push_front("--host")
-			exec.push_front("flatpak-spawn")
-		exec.erase("%U")
-		exec.erase("%u")
-		exec.erase("%F")
-		exec.erase("@@")
-		exec.erase("@@u")
-		var args:= Array(exec.duplicate())
-		args.remove_at(0)
-		print("executing ", exec[0])
-		print(args)
-		OS.execute_with_pipe(exec[0], args)
+		Executor.run_entry(entry)
 
 func _on_mouse_entered() -> void:
 	under_mouse = true
@@ -130,6 +113,9 @@ func erase():
 	extending = -1
 	extension = Vector2.ONE
 	entry = null
+	if is_instance_valid(dynamic_icon): 
+		dynamic_icon.queue_free()
+		dynamic_icon = null
 
 func copy(item: GridSlot):
 	filename = item.filename
@@ -155,3 +141,13 @@ func _on_button_up() -> void:
 	scale = Vector2(1, 1)
 	if extending >= 0:
 		get_parent().get_child(extending)._on_button_up()
+
+func set_dynamic_icon():
+	if entry != null and not entry.dynamic_iconpath.is_empty():
+		if dynamic_icon == null:
+			dynamic_icon = entry.dynamic_icon().instantiate()
+			if dynamic_icon != null:
+				add_child(dynamic_icon)
+	elif dynamic_icon != null:
+		dynamic_icon.queue_free()
+		dynamic_icon = null

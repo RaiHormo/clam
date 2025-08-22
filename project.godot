@@ -26,6 +26,7 @@ config/icon="res://asset/icon.svg"
 [autoload]
 
 State="*res://gd/state.gd"
+Executor="*res://gd/executor.gd"
 
 [debug]
 

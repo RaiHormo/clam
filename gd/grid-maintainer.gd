@@ -3,19 +3,20 @@ extends GridContainer
 @export var rows: int = 3:
 	set(x):
 		rows = x
-		_on_sort_children()
+		_on_pre_sort_children()
 
 func _ready() -> void:
 	State.menu_changed.connect(menu_changed)
 
 func menu_changed():
-	_on_sort_children()
+	_on_pre_sort_children()
 
-func _on_sort_children() -> void:
+func _on_pre_sort_children() -> void:
 	columns = ceili(float(get_child_count()) / float(rows))
 	for i in get_children():
 		i.update()
-	for i in get_children():
+	for i: GridSlot in get_children():
+		#i.rotation_degrees = -90
 		if not i.filename.is_empty():
 			State.positions.set(i.filename, i.get_index())
 

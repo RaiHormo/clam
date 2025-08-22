@@ -1,10 +1,29 @@
-[gd_scene load_steps=14 format=3 uid="uid://xyot0aambvq1"]
+[gd_scene load_steps=17 format=3 uid="uid://xyot0aambvq1"]
 
 [ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/SmoothScrollContainer.gd" id="1_ei22d"]
 [ext_resource type="Script" uid="uid://caq8rcu0lvj6u" path="res://gd/grid-dock.gd" id="1_l4qic"]
 [ext_resource type="PackedScene" uid="uid://c64dchpnpluy" path="res://gd/grid-slot.tscn" id="1_m5sku"]
 [ext_resource type="Script" uid="uid://b7h0k2h2qwlqv" path="res://addons/SmoothScroll/scroll_damper/expo_scroll_damper.gd" id="2_bll8t"]
 [ext_resource type="Script" uid="uid://bvmcxpsd1vprg" path="res://gd/grid-maintainer.gd" id="3_bll8t"]
+[ext_resource type="Script" uid="uid://bxkhywuif8j27" path="res://gd/builtin_entry.gd" id="6_xxuka"]
+
+[sub_resource type="Resource" id="Resource_k4sq4"]
+script = ExtResource("6_xxuka")
+title = "Settings"
+iconpath = ""
+filepath = "settings"
+type_override = ""
+dynamic_iconpath = "settings"
+metadata/_custom_type_script = "uid://bxkhywuif8j27"
+
+[sub_resource type="Resource" id="Resource_wv6dg"]
+script = ExtResource("6_xxuka")
+title = "Connections"
+iconpath = ""
+filepath = "connections"
+type_override = ""
+dynamic_iconpath = "connections"
+metadata/_custom_type_script = "uid://bxkhywuif8j27"
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bll8t"]
 draw_center = false
@@ -38,13 +57,13 @@ content_margin_left = 24.0
 content_margin_top = 24.0
 content_margin_right = 24.0
 content_margin_bottom = 24.0
-bg_color = Color(0.09, 0.09, 0.09, 0.517647)
+bg_color = Color(1, 1, 1, 0.223529)
 corner_radius_top_left = 24
 corner_radius_top_right = 24
 corner_radius_bottom_right = 24
 corner_radius_bottom_left = 24
-shadow_color = Color(0, 0, 0, 0.173)
-shadow_size = 24
+shadow_color = Color(0, 0, 0, 0.129412)
+shadow_size = 12
 
 [node name="Grid" type="Control"]
 layout_mode = 3
@@ -65,10 +84,12 @@ theme_override_constants/separation = 24
 alignment = 1
 script = ExtResource("1_l4qic")
 
-[node name="Slot" parent="Dock" instance=ExtResource("1_m5sku")]
+[node name="Slot1" parent="Dock" instance=ExtResource("1_m5sku")]
 layout_mode = 2
-size_flags_horizontal = 5
 mouse_filter = 1
+title = "Settings"
+filename = "settings"
+entry = SubResource("Resource_k4sq4")
 
 [node name="Slot2" parent="Dock" instance=ExtResource("1_m5sku")]
 layout_mode = 2
@@ -79,6 +100,9 @@ mouse_filter = 1
 layout_mode = 2
 size_flags_horizontal = 5
 mouse_filter = 1
+title = "Connections"
+filename = "connections"
+entry = SubResource("Resource_wv6dg")
 
 [node name="Slot4" parent="Dock" instance=ExtResource("1_m5sku")]
 layout_mode = 2
@@ -146,4 +170,4 @@ layout_mode = 2
 mouse_filter = 1
 
 [connection signal="scroll_ended" from="SmoothScrollContainer" to="SmoothScrollContainer/HBoxContainer/PanelContainer/GridContainer" method="_on_smooth_scroll_container_scroll_ended"]
-[connection signal="sort_children" from="SmoothScrollContainer/HBoxContainer/PanelContainer/GridContainer" to="SmoothScrollContainer/HBoxContainer/PanelContainer/GridContainer" method="_on_sort_children"]
+[connection signal="pre_sort_children" from="SmoothScrollContainer/HBoxContainer/PanelContainer/GridContainer" to="SmoothScrollContainer/HBoxContainer/PanelContainer/GridContainer" method="_on_pre_sort_children"]

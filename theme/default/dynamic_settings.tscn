@@ -1,0 +1,128 @@
+[gd_scene load_steps=9 format=3 uid="uid://do835n2oah0sj"]
+
+[ext_resource type="Shader" uid="uid://colcss2ql4f6u" path="res://gd/dropshadow.gdshader" id="1_dqo40"]
+[ext_resource type="Script" uid="uid://dfymk6i6uv4ym" path="res://gd/accent_colorizer.gd" id="1_s65yv"]
+[ext_resource type="Texture2D" uid="uid://th2oaxr4b4oc" path="res://theme/default/wrench.png" id="2_s65yv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h1fbs"]
+bg_color = Color(0.625421, 0.305718, 0.96212, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+shadow_color = Color(0, 0, 0, 0.129412)
+shadow_size = 4
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wuuqc"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 2
+border_width_top = 1
+border_width_right = 2
+border_width_bottom = 3
+border_blend = true
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+shadow_color = Color(0, 0, 0, 0.254902)
+shadow_size = 3
+anti_aliasing = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_obaq1"]
+shader = ExtResource("1_dqo40")
+shader_parameter/radius = 5.0
+shader_parameter/modulate = Color(0, 0, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wuuqc"]
+shader = ExtResource("1_dqo40")
+shader_parameter/radius = 7.18
+shader_parameter/modulate = Color(0, 0, 0, 0.662745)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_la6vw"]
+shader = ExtResource("1_dqo40")
+shader_parameter/radius = 11.305
+shader_parameter/modulate = Color(0, 0, 0, 0.470588)
+
+[node name="Settings" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Panel2" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 48.3249
+offset_top = 94.8124
+offset_right = 117.325
+offset_bottom = 109.812
+scale = Vector2(1.15439, 1.15439)
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_h1fbs")
+script = ExtResource("1_s65yv")
+path = "panel"
+type = 1
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 96.3249
+offset_top = 84.8124
+offset_right = 110.325
+offset_bottom = 117.812
+scale = Vector2(1.15439, 1.15439)
+pivot_offset = Vector2(4, 11)
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_wuuqc")
+
+[node name="Wrench" type="CanvasGroup" parent="."]
+visible = false
+position = Vector2(15, 91)
+scale = Vector2(1.3, 1.3)
+fit_margin = 0.0
+
+[node name="Outline2" type="Polygon2D" parent="Wrench"]
+material = SubResource("ShaderMaterial_obaq1")
+position = Vector2(-5.38462, 5.38461)
+rotation = -0.032881
+scale = Vector2(1.21635, 1.12683)
+offset = Vector2(-30, -88)
+polygon = PackedVector2Array(30.6747, 75.4605, 50.9158, 54.8073, 48.217, 49.644, 48, 43, 50, 35, 52, 31, 56, 27, 64, 23, 70, 24, 77.2292, 28.2531, 66.4339, 41.5302, 68.458, 43.743, 39.4458, 81.3615, 34.7229, 84.3119, 34.7229, 84.3119, 32.0241, 86.5248, 30, 83.5743, 30, 79.8862)
+uv = PackedVector2Array(29, 80, 52, 55, 48, 40, 57, 24, 70, 24, 72, 33, 62, 34, 61, 45, 66, 50, 34, 83)
+
+[node name="Outline3" type="Polygon2D" parent="Wrench"]
+material = SubResource("ShaderMaterial_wuuqc")
+position = Vector2(-4.61539, 6.15384)
+rotation = 1.43553
+scale = Vector2(-1.21686, 1.12638)
+offset = Vector2(-30, -88)
+polygon = PackedVector2Array(30.6747, 75.4605, 50.9158, 54.8073, 48.217, 49.644, 48, 43, 50, 35, 52, 31, 56, 27, 64, 23, 70, 24, 78.1008, 29.2366, 66.4339, 41.5302, 68.458, 43.743, 39.4458, 81.3615, 34.7229, 84.3119, 34.7229, 84.3119, 32.0241, 86.5248, 30, 83.5743, 30, 79.8862)
+uv = PackedVector2Array(29, 80, 52, 55, 48, 40, 57, 24, 70, 24, 72, 33, 62, 34, 61, 45, 66, 50, 34, 83)
+
+[node name="Left" type="Polygon2D" parent="Wrench"]
+color = Color(0.340339, 0.340339, 0.340339, 1)
+offset = Vector2(-30, -88)
+polygon = PackedVector2Array(29, 78, 52, 55, 49, 50, 48, 43, 50, 35, 52, 31, 56, 27, 64, 23, 70, 24, 76, 27, 62, 41, 66, 44, 37, 80, 31, 81, 32, 86, 30, 88, 28, 85, 28, 82)
+uv = PackedVector2Array(29, 80, 52, 55, 48, 40, 57, 24, 70, 24, 72, 33, 62, 34, 61, 45, 66, 50, 34, 83)
+
+[node name="Right" type="Polygon2D" parent="Wrench"]
+position = Vector2(9.53674e-07, -9.53674e-07)
+rotation = -1.74533
+scale = Vector2(1, -1)
+color = Color(0.340339, 0.340339, 0.340339, 1)
+offset = Vector2(-29.7328, -88.1756)
+polygon = PackedVector2Array(29.9961, 77.9759, 52, 55, 49, 50, 48, 43, 50, 35, 52, 31, 56, 27, 64, 23, 70, 24, 75.8825, 27.237, 63.0205, 40.6746, 66.8432, 45.0777, 36.5995, 80.8732, 31.5018, 80.7567, 31.3853, 85.8543, 29.763, 88.1713, 28.0836, 84.4057, 28.5474, 81.2776)
+uv = PackedVector2Array(29, 80, 52, 55, 48, 40, 57, 24, 70, 24, 72, 33, 62, 34, 61, 45, 66, 50, 34, 83)
+
+[node name="Wrench2" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_la6vw")
+position = Vector2(56.325, 61.8124)
+scale = Vector2(0.256275, 0.256275)
+texture = ExtResource("2_s65yv")

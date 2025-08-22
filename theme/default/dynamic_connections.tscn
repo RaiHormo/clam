@@ -1,0 +1,184 @@
+[gd_scene load_steps=9 format=3 uid="uid://bjp1i4j1ehrxu"]
+
+[ext_resource type="Shader" uid="uid://colcss2ql4f6u" path="res://gd/dropshadow.gdshader" id="1_4kjjj"]
+[ext_resource type="Texture2D" uid="uid://bpnxs8md4y03j" path="res://theme/default/connections.png" id="2_cralv"]
+[ext_resource type="Script" uid="uid://dfymk6i6uv4ym" path="res://gd/accent_colorizer.gd" id="3_cralv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nfppl"]
+bg_color = Color(0.819654, 0.819655, 0.819654, 1)
+border_width_left = 6
+border_width_top = 4
+border_width_right = 6
+border_width_bottom = 8
+border_color = Color(0.65834, 0.65834, 0.65834, 1)
+border_blend = true
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+shadow_color = Color(0, 0, 0, 0.223529)
+shadow_size = 12
+shadow_offset = Vector2(0, 5.205)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ug4uc"]
+shader = ExtResource("1_4kjjj")
+shader_parameter/radius = 4.44
+shader_parameter/modulate = Color(0, 0, 0, 0.337255)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dbqvu"]
+bg_color = Color(0.760559, 0.425232, 0.947072, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+shadow_color = Color(0, 0, 0, 0.239216)
+shadow_size = 3
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cralv"]
+bg_color = Color(0.760784, 0.423529, 0.94902, 1)
+border_width_left = 4
+border_width_right = 4
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ug4uc"]
+bg_color = Color(0.760784, 0.423529, 0.94902, 1)
+border_color = Color(1, 1, 1, 1)
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Border" type="Panel" parent="."]
+visible = false
+show_behind_parent = true
+layout_mode = 0
+offset_right = 128.0
+offset_bottom = 128.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_nfppl")
+
+[node name="Connections" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_ug4uc")
+position = Vector2(53.1969, 76.1423)
+scale = Vector2(0.573489, 0.602544)
+texture = ExtResource("2_cralv")
+
+[node name="X" type="Control" parent="."]
+visible = false
+anchors_preset = 0
+offset_left = 2.75818
+offset_top = -6.20922
+offset_right = 41.7582
+offset_bottom = 32.7908
+scale = Vector2(1.04946, 1.02196)
+mouse_filter = 2
+
+[node name="Panel" type="Panel" parent="X"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 73.0
+offset_right = 130.0
+offset_bottom = 89.0
+rotation = -0.785398
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_dbqvu")
+script = ExtResource("3_cralv")
+path = "panel"
+type = 1
+
+[node name="Panel2" type="Panel" parent="X"]
+layout_mode = 0
+offset_left = 74.73
+offset_top = 25.0
+offset_right = 140.73
+offset_bottom = 41.265
+rotation = 0.785398
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_dbqvu")
+script = ExtResource("3_cralv")
+path = "panel"
+type = 1
+
+[node name="Panel3" type="Panel" parent="X"]
+layout_mode = 0
+offset_left = 98.0
+offset_top = 39.0
+offset_right = 114.0
+offset_bottom = 66.0
+rotation = 0.785398
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_cralv")
+script = ExtResource("3_cralv")
+path = "panel"
+type = 1
+
+[node name="Panel4" type="Panel" parent="X"]
+layout_mode = 0
+offset_left = 89.0
+offset_top = 45.0
+offset_right = 110.0
+offset_bottom = 53.015
+rotation = 0.785398
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ug4uc")
+script = ExtResource("3_cralv")
+path = "panel"
+type = 1
+
+[node name="Wifi" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 1.58495
+offset_top = -4.17323
+offset_right = 41.5849
+offset_bottom = 35.8268
+mouse_filter = 2
+
+[node name="Panel" type="Panel" parent="Wifi"]
+layout_mode = 0
+offset_left = 68.0
+offset_top = 73.0
+offset_right = 85.0
+offset_bottom = 91.0
+rotation = -0.785398
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_dbqvu")
+script = ExtResource("3_cralv")
+path = "panel"
+type = 1
+
+[node name="Panel2" type="Panel" parent="Wifi"]
+layout_mode = 0
+offset_left = 81.0
+offset_top = 30.0
+offset_right = 124.0
+offset_bottom = 47.0
+rotation = 0.80272
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_dbqvu")
+script = ExtResource("3_cralv")
+path = "panel"
+type = 1
+
+[node name="Panel3" type="Panel" parent="Wifi"]
+layout_mode = 0
+offset_left = 85.0
+offset_top = 3.0
+offset_right = 148.0
+offset_bottom = 20.0
+rotation = 0.80272
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_dbqvu")
+script = ExtResource("3_cralv")
+path = "panel"
+type = 1
