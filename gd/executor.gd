@@ -20,12 +20,17 @@ func thread_load(path: String):
 		await get_tree().process_frame
 	return ResourceLoader.load_threaded_get(path)
 
+var terminal_cmd:= ["alacritty", "-e"]
+
 func run_entry(entry: Entry):
 	if entry is DesktopEntry:
 		var exec: Array = Array(State.get_line("Exec", entry.lines).split(" "))
 		if OS.get_environment("container"):
 			exec.push_front("--host")
 			exec.push_front("flatpak-spawn")
+		if State.get_line("Terminal", entry.lines) == "true":
+			exec.push_front(terminal_cmd[1])
+			exec.push_front(terminal_cmd[0])
 		exec.erase("%U")
 		exec.erase("%u")
 		exec.erase("%F")
@@ -33,8 +38,7 @@ func run_entry(entry: Entry):
 		exec.erase("@@u")
 		var args:= Array(exec.duplicate())
 		args.remove_at(0)
-		print("executing ", exec[0])
-		print(args)
+		print("executing ", exec)
 		OS.execute_with_pipe(exec[0], args)
 	if entry is BuiltinEntry:
 		if has_method(entry.filepath):

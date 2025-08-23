@@ -24,7 +24,7 @@ func parse_app_folder(dir: String, j = 0):
 	dir = dir.replace("%USER%", State.user)
 	var app_folder = DirAccess.open(dir)
 	if app_folder == null: return
-	#print(app_folder.get_files())
+	print(app_folder.get_files())
 	for i in app_folder.get_files():
 		if i in State.applist: continue
 		var slot = grid.get_child(j)

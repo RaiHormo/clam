@@ -9,7 +9,7 @@ var positions: Dictionary
 var theme: MenuTheme = preload("res://theme/default/theme.tres")
 var theme_path = "dev"
 var content_folders: Array[String] = [
-	"/usr/share/applications",
+	"/usr/share/applications/",
 	"/run/host/usr/share/applications/",
 	"/home/%USER%/.local/share/flatpak/exports/share/applications",
 	"/home/%USER%/.local/share/applications/"
