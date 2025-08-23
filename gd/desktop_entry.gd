@@ -10,9 +10,9 @@ static func open(path: String) -> DesktopEntry:
 	var entry = DesktopEntry.new()
 	entry.filepath = path
 	entry.lines = file.get_as_text().split("\n")
-	entry.title = entry.get_line("Name")
+	entry.title = State.get_line("Name", entry.lines)
 	
-	var icon_param = entry.get_line("Icon")
+	var icon_param = State.get_line("Icon", entry.lines)
 	if icon_param == null: return null
 	if icon_param.begins_with("/"):
 		entry.iconpath = icon_param
@@ -28,11 +28,7 @@ static func open(path: String) -> DesktopEntry:
 		State.icons.set(icon_param, entry.iconpath)
 	return entry
 
-func get_line(line: String):
-	for i: String in lines:
-		if i.begins_with(line+"="): 
-			return i.replace(line+"=", "")
 	
 func get_type_extended():
-	if "steam" in get_line("Exec"): return "steam"
+	if "steam" in State.get_line("Exec", lines): return "steam"
 	return "native_app"

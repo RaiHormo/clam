@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://dv8by37in1rsw" path="res://gd/menu_theme.gd" id="1_5ubv1"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y77lc"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_femuk"]
 bg_color = Color(0.819654, 0.819655, 0.819654, 1)
 border_width_left = 6
@@ -30,8 +32,6 @@ corner_radius_bottom_left = 24
 shadow_color = Color(0, 0.0935, 0.17, 0.32549)
 shadow_size = 12
 shadow_offset = Vector2(0, 5.205)
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y77lc"]
 
 [resource]
 script = ExtResource("1_5ubv1")

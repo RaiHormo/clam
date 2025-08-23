@@ -60,10 +60,11 @@ func focus():
 		var extender: GridSlot = get_parent().get_child(extending)
 		extender.focus()
 	await get_tree().create_timer(0.1).timeout
+	while button_pressed: await get_tree().process_frame
 	executable = true
 
 func press():
-	scale = Vector2(0.9, 0.9)
+	if executable: scale = Vector2(0.9, 0.9)
 	if extending >= 0:
 		get_parent().get_child(extending).press()
 	var timer = get_tree().create_timer(0.5)
@@ -74,13 +75,20 @@ func press():
 	elif not filename.is_empty() and not Input.is_action_pressed("ui_accept"):
 		if button_pressed and timer.time_left == 0:
 			scale = Vector2(0.9, 0.9)
-			modulate = Color(1,1,1,0.6)
+			modulate = Color(1,1,1,0)
 			get_viewport().gui_release_focus()
+			var grabber = await Executor.slot_grabber()
+			grabber.slot.copy(self)
 			State.drag_state = true
 			while Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 				await get_tree().process_frame
-			update()
 			State.drag_state = false
+			await get_tree().create_timer(0.1).timeout
+			#grabber.slot.copy(State.selection)
+			await grabber.go_and_disappear(global_position)
+			State.selection.grab_focus()
+			show()
+			update()
 			modulate = Color.WHITE
 
 func execute():
@@ -89,15 +97,27 @@ func execute():
 
 func _on_mouse_entered() -> void:
 	under_mouse = true
-	if State.drag_state:
+	if State.drag_state and self != State.selection:
 		while State.drag_state and under_mouse:
 			modulate = Color.GRAY
 			await get_tree().process_frame
 		if not State.drag_state and is_instance_valid(State.selection):
+			var grabber = get_tree().root.get_node_or_null("SlotGrab")
+			if grabber != null:
+				grabber.slot.copy(self)
+				grabber.follow = false
+				grabber.position = global_position
+			modulate = Color.TRANSPARENT
+			grabber = await Executor.slot_grabber()
+			grabber.slot.copy(State.selection)
+			await get_tree().process_frame
 			var temp = self.duplicate()
 			copy(State.selection)
 			State.selection.copy(temp)
 			State.selection.update()
+			State.selection = self
+			await grabber.go_and_disappear(global_position)
+			modulate = Color.WHITE
 			grab_focus()
 			State.menu_changed.emit()
 		modulate = Color.WHITE
@@ -123,6 +143,7 @@ func copy(item: GridSlot):
 	title = item.title
 	extension = item.extension
 	entry = item.entry
+	update()
 
 func _on_focus_exited() -> void:
 	$Focus.hide()

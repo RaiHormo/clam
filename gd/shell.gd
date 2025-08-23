@@ -41,7 +41,7 @@ func parse_app_folder(dir: String, j = 0):
 				j =  max(0, j - grid.get_child_count()+1)
 			slot = grid.get_child(j)
 		var entry = await DesktopEntry.open(dir+i)
-		if entry != null and entry.get_line("NoDisplay") != "true" and not "Proton" in entry.title:
+		if entry != null and State.get_line("NoDisplay", entry.lines) != "true" and not "Proton" in entry.title:
 			State.applist.append(i)
 			slot.entry = entry
 			slot.filename = i

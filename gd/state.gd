@@ -41,3 +41,9 @@ func save_iconcache():
 func save_positions():
 	var file = FileAccess.open("user://icon_positions", FileAccess.WRITE)
 	file.store_line(JSON.stringify(positions))
+
+func get_line(line: String, in_arr: Array, devider:= "=") -> String:
+	for i: String in in_arr:
+		if i.begins_with(line+"="): 
+			return i.replace(line+"=", "")
+	return ""

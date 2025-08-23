@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://xyot0aambvq1"]
+[gd_scene load_steps=18 format=3 uid="uid://xyot0aambvq1"]
 
 [ext_resource type="Script" uid="uid://bgqglerkcylxx" path="res://addons/SmoothScroll/SmoothScrollContainer.gd" id="1_ei22d"]
 [ext_resource type="Script" uid="uid://caq8rcu0lvj6u" path="res://gd/grid-dock.gd" id="1_l4qic"]
@@ -23,6 +23,15 @@ iconpath = ""
 filepath = "connections"
 type_override = ""
 dynamic_iconpath = "connections"
+metadata/_custom_type_script = "uid://bxkhywuif8j27"
+
+[sub_resource type="Resource" id="Resource_3gu35"]
+script = ExtResource("6_xxuka")
+title = "Power"
+iconpath = ""
+filepath = "power"
+type_override = ""
+dynamic_iconpath = "power"
 metadata/_custom_type_script = "uid://bxkhywuif8j27"
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bll8t"]
@@ -113,6 +122,9 @@ mouse_filter = 1
 layout_mode = 2
 size_flags_horizontal = 5
 mouse_filter = 1
+title = "Power"
+filename = "power"
+entry = SubResource("Resource_3gu35")
 
 [node name="SmoothScrollContainer" type="ScrollContainer" parent="."]
 clip_contents = false
