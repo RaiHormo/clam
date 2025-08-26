@@ -1,9 +1,6 @@
 class_name GridSlot extends Button
 @export var title: String
-@export var filename: String = "":
-	set(x):
-		filename = x
-		update()
+@export var filename: String = ""
 var under_mouse:= false
 @export var extension:= Vector2i(1, 1)
 @export var extending:= -1
@@ -28,7 +25,7 @@ func update():
 		$Icon.show() 
 		if extension == Vector2i.ONE and extending<0: $Border.show()
 		else: $Border.hide()
-		if entry != null and State.theme != null:
+		if entry != null and State.theme != null and State.theme.slots.has(entry.get_type()):
 			$Border.add_theme_stylebox_override("panel", State.theme.slots.get(entry.get_type()))
 		$Placeholder.hide()
 		$Icon.size = size * Vector2(extension)
@@ -74,10 +71,10 @@ func press():
 		execute()
 	elif not filename.is_empty() and not Input.is_action_pressed("ui_accept"):
 		if button_pressed and timer.time_left == 0:
+			var grabber = await Executor.slot_grabber()
 			scale = Vector2(0.9, 0.9)
 			modulate = Color(1,1,1,0)
 			get_viewport().gui_release_focus()
-			var grabber = await Executor.slot_grabber()
 			grabber.slot.copy(self)
 			State.drag_state = true
 			while Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
@@ -102,21 +99,22 @@ func _on_mouse_entered() -> void:
 			modulate = Color.GRAY
 			await get_tree().process_frame
 		if not State.drag_state and is_instance_valid(State.selection):
-			var grabber = get_tree().root.get_node_or_null("SlotGrab")
+			var grabber = await Executor.slot_grabber()
+			grabber.slot.copy(State.selection)
+			await get_tree().process_frame
+			grabber.go_and_disappear(global_position)
+			grabber = get_tree().root.get_node_or_null("SlotGrab")
 			if grabber != null:
 				grabber.slot.copy(self)
 				grabber.follow = false
 				grabber.position = global_position
 			modulate = Color.TRANSPARENT
-			grabber = await Executor.slot_grabber()
-			grabber.slot.copy(State.selection)
-			await get_tree().process_frame
 			var temp = self.duplicate()
 			copy(State.selection)
 			State.selection.copy(temp)
 			State.selection.update()
 			State.selection = self
-			await grabber.go_and_disappear(global_position)
+			await get_tree().create_timer(0.3).timeout
 			modulate = Color.WHITE
 			grab_focus()
 			State.menu_changed.emit()
@@ -136,6 +134,7 @@ func erase():
 	if is_instance_valid(dynamic_icon): 
 		dynamic_icon.queue_free()
 		dynamic_icon = null
+	update()
 
 func copy(item: GridSlot):
 	filename = item.filename

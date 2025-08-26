@@ -16,6 +16,10 @@ func open(menu: String, from: Node = null):
 	t.tween_property($Window, "position:y", $Window.position.y, 0.3).from(get_bottom()+50)
 	t.tween_property($Fader, "modulate:a", 1, 0.3).from(0)
 	get_node("%Scroll/"+current+"/Header/Back").grab_focus()
+	match menu:
+		"Home":
+			var brightness = (await Executor.run(["external/brightnessctl", "g", "-P"]))[0].to_int()
+			$Window/Scroll/Home/Brightness/HSlider.value = brightness
 
 func back():
 	if previous != null:
@@ -47,3 +51,7 @@ func navigate() -> void:
 func reopen():
 	var t = create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT).set_parallel()
 	t.tween_property($Window, "position:x", get_x(), 0.3)
+
+
+func brightness_slider(value: float) -> void:
+	Executor.run(["external/brightnessctl", "s", str(value)+"%"])

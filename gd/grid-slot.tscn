@@ -1,7 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://c64dchpnpluy"]
+[gd_scene load_steps=7 format=3 uid="uid://c64dchpnpluy"]
 
 [ext_resource type="Script" uid="uid://bjoi1xy5u62y5" path="res://gd/grid-slot.gd" id="1_pedtt"]
-[ext_resource type="Texture2D" uid="uid://dkbf2kofkdygt" path="res://asset/Placeholder.png" id="2_pedtt"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5msxx"]
 bg_color = Color(1, 1, 1, 0)
@@ -104,11 +103,11 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_5ad0r")
 [node name="Icon" type="TextureRect" parent="Icon"]
 layout_mode = 2
 mouse_filter = 2
-texture = ExtResource("2_pedtt")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="Border" type="Panel" parent="."]
+visible = false
 show_behind_parent = true
 layout_mode = 0
 offset_right = 128.0

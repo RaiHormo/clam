@@ -8,11 +8,18 @@ class_name Entry
 @export var dynamic_iconpath = ""
 
 static func open(path: String) -> Entry:
-	var entry =  Entry.new()
-	entry.filepath = path
-	return entry
+	if path.ends_with(".tres"):
+		var tres =  await Executor.thread_load(path)
+		if tres is Entry:
+			return tres
+		else: return null
+	elif path.ends_with(".desktop"):
+		return await DesktopEntry.open(path)
+	else:
+		return null
 
 func icon() -> Texture:
+	if iconpath == "": return null
 	if FileAccess.file_exists(iconpath):
 		var img = Image.load_from_file(iconpath)
 		return ImageTexture.create_from_image(img)
@@ -32,3 +39,6 @@ func get_type():
 			return call("get_type_extended")
 		else: return "unknown"
 	else: return type_override
+
+func should_be_shown():
+	return true

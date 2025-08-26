@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="BuiltinEntry" load_steps=2 format=3 uid="uid://c1el6k2uka7uo"]
+
+[ext_resource type="Script" uid="uid://bxkhywuif8j27" path="res://gd/builtin_entry.gd" id="1_k0o7a"]
+
+[resource]
+script = ExtResource("1_k0o7a")
+shell_open = "power"
+title = "Power"
+iconpath = ""
+filepath = "power.tres"
+type_override = ""
+dynamic_iconpath = "power"
+metadata/_custom_type_script = "uid://bxkhywuif8j27"

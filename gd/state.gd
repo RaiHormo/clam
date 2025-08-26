@@ -4,16 +4,32 @@ signal menu_changed
 var drag_state:= false
 var user: String
 var icons: Dictionary
-var applist: PackedStringArray = []
-var positions: Dictionary
+var shell: Shell
+var applist: Dictionary = {
+	"settings.tres": "dock",
+	"connections.tres": "dock",
+	"power.tres": "dock"
+}
+var positions: Dictionary = {
+	"settings.tres": 0,
+	"connections.tres": 2,
+	"power.tres": 4
+}
 var theme: MenuTheme = preload("res://theme/default/theme.tres")
 var theme_path = "dev"
 var content_folders: Array[String] = [
+	"res://gd/applets/entries/",
 	"/usr/share/applications/",
 	"/run/host/usr/share/applications/",
 	"/home/%USER%/.local/share/flatpak/exports/share/applications",
-	"/home/%USER%/.local/share/applications/"
+	"/home/%USER%/.local/share/applications/",
 ]
+var config: Dictionary = {
+	"menu_rows": 3,
+	"menu_columns": 30,
+	"menu_iconscale": 1,
+	"dock_size": 5,
+}
 
 func _ready() -> void:
 	menu_changed.connect(save_positions)
@@ -23,6 +39,9 @@ func _ready() -> void:
 	if FileAccess.file_exists("user://icon_positions"):
 		var file = FileAccess.open("user://icon_positions", FileAccess.READ)
 		positions = JSON.parse_string(file.get_as_text())
+	if FileAccess.file_exists("user://icon_folders"):
+		var file = FileAccess.open("user://icon_folders", FileAccess.READ)
+		applist = JSON.parse_string(file.get_as_text())
 	if not FileAccess.file_exists("user://theme/default/theme.tres") or theme_path == "dev":
 		theme_path = "user://theme/default/"
 		DirAccess.make_dir_absolute("user://theme")
@@ -41,9 +60,11 @@ func save_iconcache():
 func save_positions():
 	var file = FileAccess.open("user://icon_positions", FileAccess.WRITE)
 	file.store_line(JSON.stringify(positions))
+	file = FileAccess.open("user://icon_folders", FileAccess.WRITE)
+	file.store_line(JSON.stringify(applist))
 
 func get_line(line: String, in_arr: Array, devider:= "=") -> String:
 	for i: String in in_arr:
-		if i.begins_with(line+"="): 
-			return i.replace(line+"=", "")
+		if i.begins_with(line+devider): 
+			return i.replace(line+devider, "")
 	return ""

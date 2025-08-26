@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="BuiltinEntry" load_steps=2 format=3 uid="uid://cu8jqev58lh1t"]
+
+[ext_resource type="Script" uid="uid://bxkhywuif8j27" path="res://gd/builtin_entry.gd" id="1_ddf6a"]
+
+[resource]
+script = ExtResource("1_ddf6a")
+shell_open = "connections"
+title = "Connections"
+iconpath = ""
+filepath = "connections.tres"
+type_override = ""
+dynamic_iconpath = "connections"
+metadata/_custom_type_script = "uid://bxkhywuif8j27"

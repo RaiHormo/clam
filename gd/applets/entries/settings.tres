@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="BuiltinEntry" load_steps=2 format=3 uid="uid://dc20tn4olf063"]
+
+[ext_resource type="Script" uid="uid://bxkhywuif8j27" path="res://gd/builtin_entry.gd" id="1_a7eoo"]
+
+[resource]
+script = ExtResource("1_a7eoo")
+shell_open = "settings"
+title = "Settings"
+iconpath = ""
+filepath = "settings.tres"
+type_override = ""
+dynamic_iconpath = "settings"
+metadata/_custom_type_script = "uid://bxkhywuif8j27"

@@ -32,3 +32,8 @@ static func open(path: String) -> DesktopEntry:
 func get_type_extended():
 	if "steam" in State.get_line("Exec", lines): return "steam"
 	return "native_app"
+
+func should_be_shown():
+	if State.get_line("NoDisplay", lines) == "true" or "Proton" in title:
+		return false
+	return true

@@ -2,7 +2,7 @@ extends Node
 
 var settings_pack: PackedScene = preload("res://gd/applets/settings.tscn")
 
-func run(command: Array[String]):
+func run(command: Array[String]) -> PackedStringArray:
 	var args = command.duplicate()
 	args.remove_at(0)
 	var thread = Thread.new()
@@ -10,9 +10,9 @@ func run(command: Array[String]):
 	print("execute ", command)
 	thread.start(OS.execute.bind(command[0], args, output))
 	await thread.wait_to_finish()
-	output = output[0].split('\n')
-	print(output)
-	return output
+	var putout: PackedStringArray = output[0].split('\n')
+	print(putout)
+	return putout
 
 func thread_load(path: String):
 	ResourceLoader.load_threaded_request(path)
@@ -20,17 +20,14 @@ func thread_load(path: String):
 		await get_tree().process_frame
 	return ResourceLoader.load_threaded_get(path)
 
-var terminal_cmd:= ["alacritty", "-e"]
-
 func run_entry(entry: Entry):
 	if entry is DesktopEntry:
 		var exec: Array = Array(State.get_line("Exec", entry.lines).split(" "))
+		if State.get_line("Terminal", entry.lines) == "true":
+			exec.push_front("xdg-terminal-exec")
 		if OS.get_environment("container"):
 			exec.push_front("--host")
 			exec.push_front("flatpak-spawn")
-		if State.get_line("Terminal", entry.lines) == "true":
-			exec.push_front(terminal_cmd[1])
-			exec.push_front(terminal_cmd[0])
 		exec.erase("%U")
 		exec.erase("%u")
 		exec.erase("%F")
@@ -40,9 +37,10 @@ func run_entry(entry: Entry):
 		args.remove_at(0)
 		print("executing ", exec)
 		OS.execute_with_pipe(exec[0], args)
+		State.shell.minimize()
 	if entry is BuiltinEntry:
-		if has_method(entry.filepath):
-			call(entry.filepath)
+		if has_method(entry.shell_open):
+			call(entry.shell_open)
 	
 func settings(menu = "Home", from: Node = null):
 	var seti = settings_pack.instantiate()
