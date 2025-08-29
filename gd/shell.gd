@@ -23,7 +23,7 @@ func parse_app_folder(dir: String):
 	dir = dir.replace("%USER%", State.user)
 	var app_folder = DirAccess.open(dir)
 	if app_folder == null: return
-	print(app_folder.get_files())
+	#print(app_folder.get_files())
 	var root_slots: Array[GridSlot] = []
 	var dock_slots: Array[GridSlot] = []
 	for i in app_folder.get_files():
@@ -46,16 +46,17 @@ func parse_app_folder(dir: String):
 	grid.setup_slots(root_slots)
 	$Grid/Dock.setup_slots(dock_slots)
 
-func minimize():
-	var t = create_tween().set_parallel()
-	t.tween_property($Black, "modulate:a", 0, 0.5)
-	t.tween_property($Grid, "modulate:a", 0, 0.5)
-	t.tween_property($Grid, "scale", Vector2(0.5, 0.5), 0.5)
+func minimize(towards: Vector2 = get_viewport_rect().get_center()):
+	var t = create_tween().set_parallel().set_ease(Tween.EASE_OUT)
+	t.tween_property($Black, "modulate", Color(0,0,0,0), 0.3)
+	t.tween_property($Grid, "modulate", Color(0,0,0,0), 0.3)
+	$Grid.pivot_offset = towards
+	t.tween_property($Grid, "scale", Vector2(1.2, 1.2), 0.3)
 	await t.finished
 	#get_window().mode = Window.MODE_MINIMIZED
 
 func restore():
 	var t = create_tween().set_parallel()
-	t.tween_property($Black, "modulate:a", 1, 0.5)
-	t.tween_property($Grid, "modulate:a", 1, 0.5)
+	t.tween_property($Black, "modulate", Color.WHITE, 0.5)
+	t.tween_property($Grid, "modulate", Color.WHITE, 0.5)
 	t.tween_property($Grid, "scale", Vector2.ONE, 0.5)

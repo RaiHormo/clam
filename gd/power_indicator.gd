@@ -1,4 +1,4 @@
-extends Control
+extends CanvasGroup
 
 @onready var fill: Panel = $Bat/Fill
 @onready var precentage: Label = $Bat/Precentage

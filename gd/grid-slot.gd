@@ -7,16 +7,27 @@ var under_mouse:= false
 @export var entry: Entry
 var executable:= false
 var dynamic_icon: Node = null
+const base_size = Vector2(128, 128)
+var folder: String
 
 func _ready() -> void:
 	focus_entered.connect(focus)
 	button_down.connect(press)
+	hide()
+	await get_tree().process_frame
 	update()
-	await get_tree().create_timer(0.1).timeout
-	update()
+	show()
 
 func update():
 	$Icon/Icon.texture = icon
+	var iconscale = 1
+	if folder == "root":
+		iconscale = State.config.get("menu_iconscale")
+	custom_minimum_size = base_size*iconscale
+	size = base_size*iconscale
+	for i in get_children():
+		i.scale = Vector2(iconscale, iconscale)
+	#scale = Vector2(iconscale, iconscale)
 	if filename.is_empty() and extending<0: 
 		$Placeholder.show()
 		$Icon.hide()
@@ -29,7 +40,7 @@ func update():
 			$Border.add_theme_stylebox_override("panel", State.theme.slots.get(entry.get_type()))
 		$Placeholder.hide()
 		$Icon.size = size * Vector2(extension)
-		$Focus.size = size * Vector2(extension)
+		#$Focus.size = size * Vector2(extension)
 		$Icon.pivot_offset = Vector2.ZERO
 		$Icon.scale = Vector2(0.9, 0.9)
 		if extending >= 0:
@@ -76,6 +87,8 @@ func press():
 			modulate = Color(1,1,1,0)
 			get_viewport().gui_release_focus()
 			grabber.slot.copy(self)
+			
+			grabber.slot.folder = folder
 			State.drag_state = true
 			while Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 				await get_tree().process_frame
@@ -101,11 +114,13 @@ func _on_mouse_entered() -> void:
 		if not State.drag_state and is_instance_valid(State.selection):
 			var grabber = await Executor.slot_grabber()
 			grabber.slot.copy(State.selection)
+			grabber.slot.folder = folder
 			await get_tree().process_frame
 			grabber.go_and_disappear(global_position)
 			grabber = get_tree().root.get_node_or_null("SlotGrab")
 			if grabber != null:
 				grabber.slot.copy(self)
+				grabber.slot.folder = folder
 				grabber.follow = false
 				grabber.position = global_position
 			modulate = Color.TRANSPARENT
@@ -131,6 +146,7 @@ func erase():
 	extending = -1
 	extension = Vector2.ONE
 	entry = null
+	$Focus.hide()
 	if is_instance_valid(dynamic_icon): 
 		dynamic_icon.queue_free()
 		dynamic_icon = null

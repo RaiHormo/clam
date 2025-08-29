@@ -24,7 +24,7 @@ func icon() -> Texture:
 		var img = Image.load_from_file(iconpath)
 		return ImageTexture.create_from_image(img)
 	else: 
-		push_warning(iconpath+" isn't a valid path")
+		print(iconpath+" isn't a valid path, no icon loaded")
 		return preload("res://asset/Placeholder.png")
 
 func dynamic_icon() -> PackedScene:

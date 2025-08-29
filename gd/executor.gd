@@ -37,10 +37,15 @@ func run_entry(entry: Entry):
 		args.remove_at(0)
 		print("executing ", exec)
 		OS.execute_with_pipe(exec[0], args)
-		State.shell.minimize()
+		var foc = get_viewport().gui_get_focus_owner()
+		if is_instance_valid(foc):
+			State.shell.minimize(foc.global_position+foc.size/2)
 	if entry is BuiltinEntry:
-		if has_method(entry.shell_open):
-			call(entry.shell_open)
+		var exec = entry.shell_open.split(":")
+		if has_method(exec[0]):
+			if exec.size() > 1:
+				call(exec[0], exec[1])
+			else: call(exec[0])
 	
 func settings(menu = "Home", from: Node = null):
 	var seti = settings_pack.instantiate()

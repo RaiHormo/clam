@@ -43,14 +43,7 @@ shadow_color = Color(0, 0, 0, 0.239216)
 shadow_size = 3
 anti_aliasing = false
 
-[node name="Control" type="Control"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
+[node name="Control" type="CanvasGroup"]
 script = ExtResource("1_5qdui")
 
 [node name="Timer" type="Timer" parent="."]
@@ -60,6 +53,7 @@ ignore_time_scale = true
 
 [node name="Bat" type="Control" parent="."]
 visible = false
+layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
@@ -113,6 +107,7 @@ theme_override_font_sizes/font_size = 48
 text = "%"
 
 [node name="Fill" type="Panel" parent="Bat"]
+layout_mode = 0
 offset_left = 54.0
 offset_top = 112.0
 offset_right = 97.0
@@ -125,6 +120,7 @@ path = "panel"
 type = 1
 
 [node name="Power" type="Control" parent="."]
+layout_mode = 3
 anchors_preset = 0
 offset_top = -6.14712
 offset_right = 40.0
@@ -144,6 +140,7 @@ texture = ExtResource("5_scdl4")
 expand_mode = 1
 
 [node name="Panel2" type="Panel" parent="Power"]
+layout_mode = 0
 offset_left = 70.0
 offset_top = 8.0
 offset_right = 122.0

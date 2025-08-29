@@ -49,17 +49,9 @@ shader = ExtResource("1_dqo40")
 shader_parameter/radius = 11.305
 shader_parameter/modulate = Color(0, 0, 0, 0.470588)
 
-[node name="Settings" type="Control"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
+[node name="Settings" type="CanvasGroup"]
 
 [node name="Panel2" type="Panel" parent="."]
-layout_mode = 0
 offset_left = 48.3249
 offset_top = 94.8124
 offset_right = 117.325
@@ -72,7 +64,6 @@ path = "panel"
 type = 1
 
 [node name="Panel" type="Panel" parent="."]
-layout_mode = 0
 offset_left = 96.3249
 offset_top = 84.8124
 offset_right = 110.325

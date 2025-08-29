@@ -83,6 +83,8 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_l4qic")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_ei22d")
 follow_focus = true
 draw_focus_border = true
+scroll_horizontal = -284
+scroll_vertical = -157
 scroll_deadzone = 100
 script = ExtResource("1_ei22d")
 wheel_scroll_damper = SubResource("Resource_xxuka")
@@ -91,8 +93,8 @@ metadata/_custom_type_script = "uid://bgqglerkcylxx"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="GridScroll"]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
+size_flags_horizontal = 6
+size_flags_vertical = 6
 
 [node name="Spacer" type="Control" parent="GridScroll/HBoxContainer"]
 custom_minimum_size = Vector2(24, 0)
@@ -109,9 +111,11 @@ script = ExtResource("4_l4qic")
 
 [node name="GridV" type="HBoxContainer" parent="GridScroll/HBoxContainer/GridPanel"]
 layout_mode = 2
+theme_override_constants/separation = 12
 
 [node name="Column0" type="VBoxContainer" parent="GridScroll/HBoxContainer/GridPanel/GridV"]
 layout_mode = 2
+theme_override_constants/separation = 12
 
 [node name="Slot0" parent="GridScroll/HBoxContainer/GridPanel/GridV/Column0" instance=ExtResource("1_m5sku")]
 layout_mode = 2

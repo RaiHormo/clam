@@ -18,7 +18,7 @@ func setup_slots(slots: Array[GridSlot]):
 	var temp_slot = $GridV/Column0/Slot0
 	var amount = State.applist.size()
 	columns = ceili(float(amount)/float(rows))
-	print(amount," ", rows," ", float(amount)/float(rows))
+	#print(amount," ", rows," ", float(amount)/float(rows))
 	while grid_v.get_child_count() < columns:
 		var column = temp_column.duplicate()
 		grid_v.add_child(column)
@@ -28,6 +28,9 @@ func setup_slots(slots: Array[GridSlot]):
 	while grid_v.get_child_count() > columns:
 		grid_v.get_child(-1).free()
 	for i in grid_v.get_children():
+		for j in i.get_children():
+			j.folder = folder
+			j.update()
 		while i.get_child_count() < rows:
 			var slot = temp_slot.duplicate()
 			slot.erase()
@@ -46,6 +49,7 @@ func setup_slots(slots: Array[GridSlot]):
 				index = 0
 			row = slot_index(index)
 		row.copy(slot)
+	menu_changed()
 
 func slot_index(index: int) -> GridSlot:
 	var rows: int = State.config.get("menu_rows")
@@ -57,6 +61,7 @@ func clear():
 	for column in grid_v.get_children():
 		for row in column.get_children():
 			row.erase()
+			row.folder = folder
 
 func _input(event: InputEvent) -> void:
 	if get_viewport().gui_get_focus_owner() == null:
@@ -67,15 +72,28 @@ func _input(event: InputEvent) -> void:
 		get_viewport().gui_release_focus()
 		State.selection = null
 		State.menu_changed.emit()
-	if event.is_action_pressed("ui_page_up"): State.config.set("menu_rows", current_rows+1)
-	if event.is_action_pressed("ui_page_down"): State.config.set("menu_rows", current_rows-1)
+	if event.is_action_pressed("ui_page_up"): 
+		State.config.set("menu_rows", current_rows+1)
+		figure_out_icon_size()
+	if event.is_action_pressed("ui_page_down"): 
+		State.config.set("menu_rows", current_rows-1)
+		figure_out_icon_size()
 	if current_rows != State.config.get("menu_rows") and not current_rows == 0:
 		clear()
 		get_tree().root.get_node("Shell").fetch_apps()
 
+func figure_out_icon_size():
+	var height = get_viewport_rect().size.y
+	var rows = State.config.get("menu_rows")
+	var container_size = 128*rows
+	print(height / container_size)
+	State.config.set("menu_iconscale", (height / container_size)/1.75)
+
 func menu_changed():
+	figure_out_icon_size()
 	for j in grid_v.get_children():
 		for i: GridSlot in j.get_children():
+			i.update()
 			#i.rotation_degrees = -90
 			if not i.filename.is_empty():
 				State.positions.set(i.filename, (j.get_index()*State.config.get("menu_rows"))+i.get_index())

@@ -107,7 +107,6 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="Border" type="Panel" parent="."]
-visible = false
 show_behind_parent = true
 layout_mode = 0
 offset_right = 128.0

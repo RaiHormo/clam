@@ -42,6 +42,9 @@ func _ready() -> void:
 	if FileAccess.file_exists("user://icon_folders"):
 		var file = FileAccess.open("user://icon_folders", FileAccess.READ)
 		applist = JSON.parse_string(file.get_as_text())
+	if FileAccess.file_exists("user://config"):
+		var file = FileAccess.open("user://config", FileAccess.READ)
+		config = JSON.parse_string(file.get_as_text())
 	if not FileAccess.file_exists("user://theme/default/theme.tres") or theme_path == "dev":
 		theme_path = "user://theme/default/"
 		DirAccess.make_dir_absolute("user://theme")
@@ -62,6 +65,8 @@ func save_positions():
 	file.store_line(JSON.stringify(positions))
 	file = FileAccess.open("user://icon_folders", FileAccess.WRITE)
 	file.store_line(JSON.stringify(applist))
+	file = FileAccess.open("user://config", FileAccess.WRITE)
+	file.store_line(JSON.stringify(config))
 
 func get_line(line: String, in_arr: Array, devider:= "=") -> String:
 	for i: String in in_arr:

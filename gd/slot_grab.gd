@@ -3,6 +3,9 @@ extends Control
 var follow:= true
 @onready var slot = $Slot
 
+func _ready() -> void:
+	slot.update()
+
 func _process(delta: float) -> void:
 	if follow:
 		position = get_viewport().get_mouse_position() - slot.size/2

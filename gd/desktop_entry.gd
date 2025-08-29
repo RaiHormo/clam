@@ -25,7 +25,9 @@ static func open(path: String) -> DesktopEntry:
 		entry.iconpath = output[0].split(": ")[3].replace("\n", "")
 		if not FileAccess.file_exists(entry.iconpath) and FileAccess.file_exists(entry.iconpath.replace("/usr/share", "/run/host/usr/share")):
 			entry.iconpath = entry.iconpath.replace("/usr/share", "/run/host/usr/share")
-		State.icons.set(icon_param, entry.iconpath)
+		if not "path(s)" in entry.iconpath:
+			State.icons.set(icon_param, entry.iconpath)
+		else: entry.iconpath = null
 	return entry
 
 	
