@@ -21,8 +21,11 @@ func fetch_apps():
 
 func parse_app_folder(dir: String):
 	dir = dir.replace("%USER%", State.user)
+	if not dir.ends_with("/"): dir += "/"
 	var app_folder = DirAccess.open(dir)
-	if app_folder == null: return
+	if app_folder == null: 
+		push_warning("Cannot open "+ dir +", Error: ", DirAccess.get_open_error())
+		return
 	#print(app_folder.get_files())
 	var root_slots: Array[GridSlot] = []
 	var dock_slots: Array[GridSlot] = []

@@ -21,7 +21,8 @@ var content_folders: Array[String] = [
 	"res://gd/applets/entries/",
 	"/usr/share/applications/",
 	"/run/host/usr/share/applications/",
-	"/home/%USER%/.local/share/flatpak/exports/share/applications",
+	"/home/%USER%/.local/share/flatpak/exports/share/applications/",
+	"/var/lib/flatpak/exports/share/applications/",
 	"/home/%USER%/.local/share/applications/",
 ]
 var config: Dictionary = {
